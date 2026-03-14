@@ -4,9 +4,16 @@ A dynamic and interactive web application built with React and Vite that visuali
 
 ## Features
 
-- **Visual Representation**: See the numbers represented as varying heights of columns.
-- **Animation**: The sorting process is paced with delays, allowing you to clearly see the `O(n^2)` swapping logic of Bubble Sort.
-- **Interactive Controls**: Generate new random arrays on demand and start the sorting process at the click of a button.
+- **Dynamic Visualization**: See the numbers represented as varying heights of columns.
+- **Color-Coded States**: 
+  - Standard elements are blue.
+  - Elements currently being compared are highlighted in **yellow**.
+  - Elements that have reached their final sorted position are highlighted in **green**.
+- **Interactive Controls**: 
+  - Sliders to adjust the **Array Size** (5 to 50 bars).
+  - Sliders to adjust the **Sorting Speed / Delay** (10ms to 500ms).
+  - Generate new random arrays on demand.
+- **Responsive & Modern UI**: Built with a sleek dark mode interface that adapts to different screen sizes.
 
 ## Prerequisites
 
