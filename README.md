@@ -1,6 +1,6 @@
-# React Bubble Sort Visualizer
+# React Sorting Algorithm Visualizer
 
-A dynamic and interactive web application built with React and Vite that visualizes the Bubble Sort algorithm. Watch as columns representing numbers swap places in real-time until the array is fully sorted.
+A dynamic and interactive web application built with React and Vite that visualizes various sorting algorithms including **Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, and Quick Sort**. Watch as columns representing numbers swap places in real-time until the array is fully sorted.
 
 ## Features
 
@@ -10,6 +10,7 @@ A dynamic and interactive web application built with React and Vite that visuali
   - Elements currently being compared are highlighted in **yellow**.
   - Elements that have reached their final sorted position are highlighted in **green**.
 - **Interactive Controls**:
+  - Dropdown to select the **Algorithm** (Bubble, Selection, Insertion, Merge, Quick).
   - Sliders to adjust the **Array Size** (5 to 50 bars).
   - Sliders to adjust the **Sorting Speed / Delay** (10ms to 500ms).
   - Generate new random arrays on demand.
@@ -55,7 +56,7 @@ A dynamic and interactive web application built with React and Vite that visuali
 
 The core of the application lives in `src/components/SortingVisualizer.tsx`. It maintains state utilizing React hooks (`useState`, `useEffect`).
 
-When you click "Sort!", the `bubbleSort` function is triggered. This function is an `async` adaptation of the classic algorithm. It uses a `Promise` combined with `setTimeout` to maliciously pause the execution thread inside the loop. After every swap, it updates the component's state, triggering a re-render of the DOM so you visually see the bars swap places before the next iteration begins.
+When you select an algorithm and click "Sort!", the respective sorting function (`bubbleSort`, `selectionSort`, etc.) is triggered. These functions are `async` adaptations of the classic algorithms. They use `Promise` combined with `setTimeout` to pause the execution thread inside the loops. During these pauses, they update the component's state (swapping arrays, tracking active indices), triggering a re-render of the DOM so you visually see the bars swap places and change colors before the next iteration begins.
 
 ## Build for Production
 
@@ -86,34 +87,40 @@ graph TD
     subgraph "SortingVisualizer State"
         State1[("array")]
         State2[("isSorting")]
+        State3[("algorithm")]
     end
     Visualizer -. "Reads & Updates" .-> State1
     Visualizer -. "Reads & Updates" .-> State2
+    Visualizer -. "Reads & Updates" .-> State3
     
     %% Actions
     subgraph "Actions"
         Act1["resetArray()"]
-        Act2["bubbleSort() async"]
+        Act2["handleSort() async routing"]
+        Act3["bubbleSort, mergeSort, etc."]
     end
     
     Visualizer --> Act1
     Visualizer --> Act2
+    Act2 --> Act3
     
     %% Effects
     Act1 -. "Generates new random values" .-> State1
-    Act2 -. "Swaps array elements iteratively" .-> State1
-    Act2 -. "Sets true during, false after" .-> State2
+    Act3 -. "Swaps array elements iteratively" .-> State1
+    Act3 -. "Sets true during, false after" .-> State2
     
     %% UI Elements
     subgraph "UI Rendered"
         UI1["Array Bars / Heights"]
         UI2["Generate Array Button"]
         UI3["Sort Button"]
+        UI4["Algorithm Dropdown"]
     end
     
     State1 -. "Determines heights & labels" .-> UI1
-    State2 -. "Disables buttons" .-> UI2
-    State2 -. "Disables buttons" .-> UI3
+    State2 -. "Disables buttons & inputs" .-> UI2
+    State2 -. "Disables buttons & inputs" .-> UI3
+    State3 -. "Current selection" .-> UI4
     
     classDef file fill:#f9f,stroke:#333,stroke-width:2px;
     classDef state fill:#bbf,stroke:#333,stroke-width:2px;
