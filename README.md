@@ -5,11 +5,11 @@ A dynamic and interactive web application built with React and Vite that visuali
 ## Features
 
 - **Dynamic Visualization**: See the numbers represented as varying heights of columns.
-- **Color-Coded States**: 
+- **Color-Coded States**:
   - Standard elements are blue.
   - Elements currently being compared are highlighted in **yellow**.
   - Elements that have reached their final sorted position are highlighted in **green**.
-- **Interactive Controls**: 
+- **Interactive Controls**:
   - Sliders to adjust the **Array Size** (5 to 50 bars).
   - Sliders to adjust the **Sorting Speed / Delay** (10ms to 500ms).
   - Generate new random arrays on demand.
@@ -23,6 +23,7 @@ A dynamic and interactive web application built with React and Vite that visuali
 ## How to Run Locally
 
 1. **Clone the repository** (if you haven't already):
+
    ```bash
    git clone https://github.com/Didithekli/react-bubblesort-visualizer.git
    cd react-bubblesort-visualizer
@@ -30,16 +31,19 @@ A dynamic and interactive web application built with React and Vite that visuali
 
 2. **Use the correct Node version**:
    If you have `nvm` installed, simply run:
+
    ```bash
    nvm use
    ```
 
 3. **Install Dependencies**:
+
    ```bash
    npm install
    ```
 
 4. **Start the Development Server**:
+
    ```bash
    npm run dev
    ```
@@ -51,11 +55,12 @@ A dynamic and interactive web application built with React and Vite that visuali
 
 The core of the application lives in `src/components/SortingVisualizer.tsx`. It maintains state utilizing React hooks (`useState`, `useEffect`).
 
-When you click "Sort!", the `bubbleSort` function is triggered. This function is an `async` adaptation of the classic algorithm. It uses a `Promise` combined with `setTimeout` to maliciously pause the execution thread inside the loop. After every swap, it updates the component's state, triggering a re-render of the DOM so you visually see the bars swap places before the next iteration begins. 
+When you click "Sort!", the `bubbleSort` function is triggered. This function is an `async` adaptation of the classic algorithm. It uses a `Promise` combined with `setTimeout` to maliciously pause the execution thread inside the loop. After every swap, it updates the component's state, triggering a re-render of the DOM so you visually see the bars swap places before the next iteration begins.
 
 ## Build for Production
 
 To create an optimized production build, run:
+
 ```bash
 npm run build
 ```
