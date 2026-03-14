@@ -53,3 +53,63 @@ To create an optimized production build, run:
 npm run build
 ```
 The output will be located in the `dist/` directory, ready to be deployed to any static hosting service.
+
+## Architecture
+
+This diagram outlines the component structure and data flow of the application.
+
+```mermaid
+graph TD
+    %% Main Application Flow
+    HTML["index.html"] --> Main["src/main.tsx"]
+    Main --> App["src/App.tsx"]
+    
+    %% Styles
+    CSS["src/index.css"] --> Main
+    
+    %% Components
+    App --> Visualizer["src/components/SortingVisualizer.tsx"]
+    
+    %% State Management inside Visualizer
+    subgraph "SortingVisualizer State"
+        State1[("array")]
+        State2[("isSorting")]
+    end
+    Visualizer -. "Reads & Updates" .-> State1
+    Visualizer -. "Reads & Updates" .-> State2
+    
+    %% Actions
+    subgraph "Actions"
+        Act1["resetArray()"]
+        Act2["bubbleSort() async"]
+    end
+    
+    Visualizer --> Act1
+    Visualizer --> Act2
+    
+    %% Effects
+    Act1 -. "Generates new random values" .-> State1
+    Act2 -. "Swaps array elements iteratively" .-> State1
+    Act2 -. "Sets true during, false after" .-> State2
+    
+    %% UI Elements
+    subgraph "UI Rendered"
+        UI1["Array Bars / Heights"]
+        UI2["Generate Array Button"]
+        UI3["Sort Button"]
+    end
+    
+    State1 -. "Determines heights & labels" .-> UI1
+    State2 -. "Disables buttons" .-> UI2
+    State2 -. "Disables buttons" .-> UI3
+    
+    classDef file fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef state fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef action fill:#dfd,stroke:#333,stroke-width:1px;
+    classDef ui fill:#ffd,stroke:#333,stroke-width:1px;
+
+    class HTML,Main,App,Visualizer,CSS file;
+    class State1,State2 state;
+    class Act1,Act2 action;
+    class UI1,UI2,UI3 ui;
+```
